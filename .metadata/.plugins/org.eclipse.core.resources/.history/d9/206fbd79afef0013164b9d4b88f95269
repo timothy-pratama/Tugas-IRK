@@ -195,7 +195,6 @@ public class ClausalForm
 			index = temp.indexOf("=>");
 		}
 		output = temp.toString();
-		System.out.println("Output from I : " + output);
 	}
 	private void N()
 	{
@@ -219,7 +218,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("(a=>b)V(b=>c)");
+		ClausalForm CF = new ClausalForm("(a<=>b)V(b<=>c)");
 		CF.INDO();
 	}
 

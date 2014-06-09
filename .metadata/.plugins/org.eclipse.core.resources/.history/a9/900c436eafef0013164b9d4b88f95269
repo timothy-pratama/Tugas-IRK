@@ -137,6 +137,9 @@ public class ClausalForm
 				}
 			}
 			
+			System.out.println("left = " + left);
+			System.out.println("right = " + right);
+		
 			/* proses sebelah kiri */
 			finalleft.append("((");
 			finalleft.append(left);
@@ -159,6 +162,8 @@ public class ClausalForm
 			/* proses temp */
 			temp.replace(index - left.length(), index + 3 + right.length(), result.toString());
 			index = temp.indexOf("<=>");
+			System.out.println("finalleft = " +finalleft);
+			System.out.println("finalright = " + finalright);
 		}
 		
 		/* Handle case with implication only */
@@ -195,7 +200,7 @@ public class ClausalForm
 			index = temp.indexOf("=>");
 		}
 		output = temp.toString();
-		System.out.println("Output from I : " + output);
+		System.out.println("output = " + output);
 	}
 	private void N()
 	{
@@ -219,7 +224,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("(a=>b)V(b=>c)");
+		ClausalForm CF = new ClausalForm("(a<=>b)V(b<=>c)");
 		CF.INDO();
 	}
 

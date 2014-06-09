@@ -22,6 +22,7 @@ public class ClausalForm
 	public void setInput(String input)
 	{
 		this.input = input;
+		input.trim();
 	}
 	public String getInput()
 	{
@@ -63,11 +64,11 @@ public class ClausalForm
 		int index;
 		int location;
 		int counter;
-		StringBuffer left;
-		StringBuffer right;
-		StringBuffer finalleft;
-		StringBuffer finalright;
-		StringBuffer result;
+		StringBuffer left = new StringBuffer();
+		StringBuffer right = new StringBuffer();
+		StringBuffer finalleft = new StringBuffer();
+		StringBuffer finalright = new StringBuffer();
+		StringBuffer result = new StringBuffer();
 				
 		/* Program */
 		StringBuffer temp = new StringBuffer(input);
@@ -76,11 +77,6 @@ public class ClausalForm
 		index = temp.indexOf("<=>");
 		while(index >= 0)
 		{
-			left = new StringBuffer();
-			right = new StringBuffer();
-			finalleft = new StringBuffer();
-			finalright = new StringBuffer();
-			result = new StringBuffer();
 			/* Find the left Operand */
 			if(temp.charAt(index - 1) != ')')
 			{
@@ -135,8 +131,8 @@ public class ClausalForm
 						j++;
 					}
 				}
-			}
-			
+			}		
+		
 			/* proses sebelah kiri */
 			finalleft.append("((");
 			finalleft.append(left);
@@ -195,7 +191,7 @@ public class ClausalForm
 			index = temp.indexOf("=>");
 		}
 		output = temp.toString();
-		System.out.println("Output from I : " + output);
+		System.out.println("output = " + output);
 	}
 	private void N()
 	{
@@ -219,7 +215,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("(a=>b)V(b=>c)");
+		ClausalForm CF = new ClausalForm("(a<=>b)V(b<=>c)");
 		CF.INDO();
 	}
 
