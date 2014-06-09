@@ -56,7 +56,7 @@ public class ClausalForm
 	{
 		System.out.println(this.toString());
 	}
-	private void I()
+	public void I()
 	{
 		/* Variable */
 		int i,j;
@@ -197,13 +197,13 @@ public class ClausalForm
 		output = temp.toString();
 		System.out.println("Output from I : " + output);
 	}
-	private void N()
+	public void N()
 	{
 		/* variable */
 		int index;
 		int iterator = 0;
 		int counter;
-		StringBuffer temp = new StringBuffer(output);
+		StringBuffer temp = new StringBuffer(input);
 		
 		/* Program */
 		/* Menghapus semua ~~ */
@@ -218,9 +218,9 @@ public class ClausalForm
 		index = temp.lastIndexOf("~(");
 		while(index >= 0)
 		{
-			iterator = index + 2;
+			iterator = index + 1;
 			counter = 1;
-			while(counter > 0)
+			while(iterator < temp.length())
 			{
 				if(temp.charAt(iterator) == '(')
 				{
@@ -252,24 +252,31 @@ public class ClausalForm
 					iterator ++;
 					iterator ++;
 				}
+				System.out.println("temp = " + temp);
+				System.out.println("iterator = " + iterator);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			temp.deleteCharAt(index);
 			index = temp.lastIndexOf("~(");
+			System.out.println("temp = " + temp);
 		}
-		output = temp.toString();
-		System.out.println("Output from N : " + output);
+		System.out.println(temp);
 	}
-	private void D()
+	public void D()
 	{
 		System.out.println("Method D");
 	}
-	private void O()
+	public void O()
 	{
 		System.out.println("Method O");
 	}
 	public void INDO()
 	{
-		input = input.replaceAll(" ", "");
+		input.trim();
 		I();
 		N();
 		D();
@@ -278,8 +285,9 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("g^(r=>f)");
-		CF.INDO();
+		ClausalForm CF = new ClausalForm("(aVb)= >(cVd)");
+		CF.I();
+		CF.N();
 	}
 
 }

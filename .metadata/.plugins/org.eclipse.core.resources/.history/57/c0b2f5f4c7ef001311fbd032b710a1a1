@@ -256,8 +256,7 @@ public class ClausalForm
 			temp.deleteCharAt(index);
 			index = temp.lastIndexOf("~(");
 		}
-		output = temp.toString();
-		System.out.println("Output from N : " + output);
+		System.out.println("Output from N : " + temp);
 	}
 	private void D()
 	{

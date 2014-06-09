@@ -252,12 +252,19 @@ public class ClausalForm
 					iterator ++;
 					iterator ++;
 				}
+				System.out.println("temp = " + temp);
+				System.out.println("iterator = " + iterator);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			temp.deleteCharAt(index);
 			index = temp.lastIndexOf("~(");
+			System.out.println("temp = " + temp);
 		}
-		output = temp.toString();
-		System.out.println("Output from N : " + output);
+		System.out.println(temp);
 	}
 	private void D()
 	{
@@ -278,7 +285,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("g^(r=>f)");
+		ClausalForm CF = new ClausalForm("(aVb)=>(cVd)");
 		CF.INDO();
 	}
 
