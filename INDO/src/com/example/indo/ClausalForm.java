@@ -58,7 +58,141 @@ public class ClausalForm
 	}
 	private void I()
 	{
-		System.out.println("Method I");
+		/* Variable */
+		int i,j;
+		int index;
+		int location;
+		int counter;
+		StringBuffer left = new StringBuffer();
+		StringBuffer right = new StringBuffer();
+		StringBuffer finalleft = new StringBuffer();
+		StringBuffer finalright = new StringBuffer();
+		StringBuffer result = new StringBuffer();
+				
+		/* Program */
+		StringBuffer temp = new StringBuffer(input);
+		System.out.println("temp = " + temp);
+		
+		/* Handle Case where <=> exist */
+		index = temp.indexOf("<=>");
+		while(index >= 0)
+		{
+			/* Find the left Operand */
+			if(temp.charAt(index - 1) != ')')
+			{
+				left = left.insert(0, temp.charAt(index-1));
+			}
+			else
+			{
+				left.insert(0, ')');
+				counter = 1;
+				j = index - 2;
+				while(counter > 0)
+				{
+					left = left.insert(0, temp.charAt(j));
+					if(temp.charAt(j)=='(')
+					{
+						counter --;
+					}
+					else if(temp.charAt(j)==')')
+					{
+						counter ++;
+					}
+					if (counter > 0)
+					{
+						j--;
+					}
+				}
+			}
+			
+			/* Find the right operand */
+			if(temp.charAt(index + 3) != '(')
+			{
+				right = right.insert(0, temp.charAt(index+3));
+			}
+			else
+			{
+				right.insert(0, '(');
+				counter = 1;
+				j = index + 4;
+				while(counter > 0)
+				{
+					right = right.insert(right.length(), temp.charAt(j));
+					if(temp.charAt(j)=='(')
+					{
+						counter ++;
+					}
+					else if(temp.charAt(j)==')')
+					{
+						counter --;
+					}
+					if (counter > 0)
+					{
+						j++;
+					}
+				}
+			}		
+		
+			/* proses sebelah kiri */
+			finalleft.append("((");
+			finalleft.append(left);
+			finalleft.append("=>");
+			finalleft.append(right);
+			finalleft.append(")");
+				
+			/* proses sebelah kanan */
+			finalright.append("(");
+			finalright.append(right);
+			finalright.append("=>");
+			finalright.append(left);
+			finalright.append("))");
+			
+			/* proses result */
+			result.append(finalleft);
+			result.append("^");
+			result.append(finalright);
+			
+			/* proses temp */
+			temp.replace(index - left.length(), index + 3 + right.length(), result.toString());
+			
+			index = temp.indexOf("<=>");
+		}
+		
+		/* Handle case with implication only */
+		index = temp.indexOf("=>");
+		while(index > 0)
+		{
+			if(temp.charAt(index - 1) != ')')
+			{
+				location = index - 1;
+			}
+			else
+			{
+				counter = 1;
+				j = index - 2;
+				while(counter > 0)
+				{
+					if(temp.charAt(j) == '(')
+					{
+						counter --;
+					}
+					else if (temp.charAt(j)==')')
+					{
+						counter ++;
+					}
+					if(counter > 0)
+					{
+						j--;
+					}
+				}
+				location = j;
+			}
+			temp = temp.insert(location, '~');
+			temp = temp.replace(index+1, index+3, "V");
+			index = temp.indexOf("=>");
+		}
+		output = temp.toString();
+		System.out.println("output = " + output);
 	}
 	private void N()
 	{
@@ -82,8 +216,8 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("coba-coba");
-		CF.Print();		
+		ClausalForm CF = new ClausalForm("((bV(c=>f)Va)<=>(d^e))");
+		CF.INDO();		
 	}
 
 }
