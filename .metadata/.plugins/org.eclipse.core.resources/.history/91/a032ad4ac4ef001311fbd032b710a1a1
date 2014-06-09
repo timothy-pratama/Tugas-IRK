@@ -254,6 +254,7 @@ public class ClausalForm
 				}
 				System.out.println("temp = " + temp);
 				System.out.println("iterator = " + iterator);
+				System.out.println("char = " + temp.charAt(iterator));
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

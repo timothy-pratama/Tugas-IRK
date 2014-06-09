@@ -201,68 +201,13 @@ public class ClausalForm
 	{
 		/* variable */
 		int index;
-		int iterator = 0;
-		int counter;
-		StringBuffer temp = new StringBuffer(input);
+		StringBuffer temp = new StringBuffer(output);
 		
 		/* Program */
-		/* Menghapus semua ~~ */
 		index = temp.indexOf("~~");
 		while(index >= 0)
 		{
 			temp.replace(index, index+2, "");
-			index = temp.indexOf("~~");
-		}
-		
-		/* Menangani kasus (...) */
-		index = temp.lastIndexOf("~(");
-		while(index >= 0)
-		{
-			iterator = index + 1;
-			counter = 1;
-			while(iterator < temp.length())
-			{
-				if(temp.charAt(iterator) == '(')
-				{
-					counter ++;
-					iterator ++;
-				}
-				else if(temp.charAt(iterator) == ')')
-				{
-					counter --;
-					iterator ++;
-				}
-				else if(temp.charAt(iterator) == '~')
-				{
-					temp.deleteCharAt(iterator);
-				}
-				else if(temp.charAt(iterator) == 'V')
-				{
-					temp.replace(iterator, iterator + 1, "^");
-					iterator++;
-				}
-				else if(temp.charAt(iterator) == '^')
-				{
-					temp.replace(iterator, iterator, "V");
-					iterator++;
-				}
-				else 
-				{
-					temp.insert(iterator, '~');
-					iterator ++;
-					iterator ++;
-				}
-				System.out.println("temp = " + temp);
-				System.out.println("iterator = " + iterator);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			temp.deleteCharAt(index);
-			index = temp.lastIndexOf("~(");
-			System.out.println("temp = " + temp);
 		}
 		System.out.println(temp);
 	}
@@ -284,7 +229,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("~~~~~~~~~(aVb)");
+		ClausalForm CF = new ClausalForm("(a=>b)V(b=>c)");
 		CF.N();
 	}
 

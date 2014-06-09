@@ -218,7 +218,7 @@ public class ClausalForm
 		index = temp.lastIndexOf("~(");
 		while(index >= 0)
 		{
-			iterator = index + 1;
+			iterator = index + 2;
 			counter = 1;
 			while(iterator < temp.length())
 			{
@@ -250,10 +250,10 @@ public class ClausalForm
 				{
 					temp.insert(iterator, '~');
 					iterator ++;
-					iterator ++;
 				}
 				System.out.println("temp = " + temp);
 				System.out.println("iterator = " + iterator);
+				System.out.println("char = " + temp.charAt(iterator));
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

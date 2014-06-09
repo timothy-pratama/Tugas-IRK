@@ -218,10 +218,11 @@ public class ClausalForm
 		index = temp.lastIndexOf("~(");
 		while(index >= 0)
 		{
-			iterator = index + 1;
+			iterator = index + 2;
 			counter = 1;
 			while(iterator < temp.length())
 			{
+				System.out.println("MASUK");
 				if(temp.charAt(iterator) == '(')
 				{
 					counter ++;
@@ -250,15 +251,8 @@ public class ClausalForm
 				{
 					temp.insert(iterator, '~');
 					iterator ++;
-					iterator ++;
 				}
 				System.out.println("temp = " + temp);
-				System.out.println("iterator = " + iterator);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			temp.deleteCharAt(index);
 			index = temp.lastIndexOf("~(");
