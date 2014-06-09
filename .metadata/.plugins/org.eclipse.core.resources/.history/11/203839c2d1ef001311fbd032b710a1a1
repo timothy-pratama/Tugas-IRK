@@ -273,7 +273,7 @@ public class ClausalForm
 		/* Program */
 		/* Kasus aV(b^c) -> (aVb)^(aVc) */
 		iterator = 0;
-		while(iterator < temp.length())
+		while(!found && iterator < temp.length())
 		{
 			if(temp.charAt(iterator)=='V' && temp.charAt(iterator - 1) != ')' && temp.charAt(iterator + 1) == '(')
 			{

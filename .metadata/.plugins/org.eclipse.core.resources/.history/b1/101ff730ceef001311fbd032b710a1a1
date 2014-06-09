@@ -267,39 +267,10 @@ public class ClausalForm
 		int counter;
 		int iterator;
 		int index;
-		int i;
-		bool found = false;
 		
 		/* Program */
-		/* Kasus aV(b^c) -> (aVb)^(aVc) */
-		iterator = 0;
-		while(iterator < temp.length())
-		{
-			if(temp.charAt(iterator)=='V' && temp.charAt(iterator - 1) != ')' && temp.charAt(iterator + 1) == '(')
-			{
-				i = iterator + 2;
-				counter = 1;
-				while(counter > 0 && !found)
-				{
-					if(temp.charAt(i) == '^')
-					{
-						found = true;
-					}
-					else
-					{
-						i ++;
-					}
-				}
-			}
-			else
-			{
-				iterator ++;
-			}
-		}
-		
-		System.out.println("temp = " + temp);
+		System.out.println(temp);
 	}
-	
 	private void O()
 	{
 		System.out.println("Method O");
@@ -315,7 +286,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(bVc)");
+		ClausalForm CF = new ClausalForm("~(g^(r=>f))");
 		CF.D();
 	}
 

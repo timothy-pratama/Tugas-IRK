@@ -3,4 +3,5 @@
 <fullyQualifiedTypeName name="com.example.indo.ClausalForm"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.lang.StringBuffer"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
 </qualifiedTypeNameHistroy>
