@@ -138,7 +138,7 @@ public class ClausalForm
 			}
 			
 			/* proses sebelah kiri */
-			finalleft.append("((");
+			finalleft.append("(");
 			finalleft.append(left);
 			finalleft.append("=>");
 			finalleft.append(right);
@@ -149,7 +149,7 @@ public class ClausalForm
 			finalright.append(right);
 			finalright.append("=>");
 			finalright.append(left);
-			finalright.append("))");
+			finalright.append())");
 			
 			/* proses result */
 			result.append(finalleft);
@@ -262,7 +262,7 @@ public class ClausalForm
 	}
 	private void D()
 	{
-		
+		System.out.println("Method D");
 	}
 	private void O()
 	{

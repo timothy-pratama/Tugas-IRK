@@ -253,6 +253,12 @@ public class ClausalForm
 					iterator ++;
 					iterator ++;
 				}
+				try {
+					Thread.sleep(1000);
+					System.out.println(temp);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			temp.deleteCharAt(index);
 			index = temp.lastIndexOf("~(");
@@ -262,7 +268,7 @@ public class ClausalForm
 	}
 	private void D()
 	{
-		
+		System.out.println("Method D");
 	}
 	private void O()
 	{

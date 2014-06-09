@@ -220,7 +220,7 @@ public class ClausalForm
 		{
 			iterator = index + 2;
 			counter = 1;
-			while(counter > 0)
+			while(counter > 0 && iterator < temp.length())
 			{
 				if(temp.charAt(iterator) == '(')
 				{
@@ -235,7 +235,6 @@ public class ClausalForm
 				else if(temp.charAt(iterator) == '~')
 				{
 					temp.deleteCharAt(iterator);
-					iterator++;
 				}
 				else if(temp.charAt(iterator) == 'V')
 				{
@@ -244,7 +243,7 @@ public class ClausalForm
 				}
 				else if(temp.charAt(iterator) == '^')
 				{
-					temp.replace(iterator, iterator+1, "V");
+					temp.replace(iterator, iterator, "V");
 					iterator++;
 				}
 				else 
@@ -256,13 +255,14 @@ public class ClausalForm
 			}
 			temp.deleteCharAt(index);
 			index = temp.lastIndexOf("~(");
+			System.out.println("temp = " + temp);
 		}
 		output = temp.toString();
 		System.out.println("Output from N : " + output);
 	}
 	private void D()
 	{
-		
+		System.out.println("Method D");
 	}
 	private void O()
 	{
