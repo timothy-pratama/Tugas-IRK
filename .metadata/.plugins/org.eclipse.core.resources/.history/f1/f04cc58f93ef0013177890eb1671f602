@@ -1,0 +1,66 @@
+package com.example.indo;
+
+public class ClausalForm 
+{
+	/* Attribute */
+	private String input;
+	private String output;
+	
+	/* Constructor */
+	public ClausalForm()
+	{
+		input = "";
+		output = "";
+	}
+	public ClausalForm(String input)
+	{
+		this.input = input;
+		output = "";
+	}
+	
+	/* Setter, Getter */
+	public void setInput(String input)
+	{
+		this.input = input;
+	}
+	public String getInput()
+	{
+		return input;
+	}
+	public String getOutput()
+	{
+		return output;
+	}
+	private String clearOutput()
+	{
+		output = "";
+	}
+	private String clearInput()
+	{
+		input = "";
+	}
+	
+	/* Method for printing */
+	public String toString()
+	{
+		StringBuffer temp = new StringBuffer();
+		temp.append("Input : ");
+		temp.append(input);
+		temp.append("\n");
+		temp.append("Output : ");
+		temp.append(output);
+		temp.append("\n");
+		return temp.toString();
+	}
+	public void Print()
+	{
+		System.out.println(this.toString());
+	}
+	
+	public static void main(String[] args) 
+	{
+		ClausalForm CF = new ClausalForm("coba-coba");
+		
+	}
+
+}
