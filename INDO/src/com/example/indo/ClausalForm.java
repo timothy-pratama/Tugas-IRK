@@ -1,5 +1,10 @@
 package com.example.indo;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+
 public class ClausalForm 
 {
 	/* Attribute */
@@ -289,16 +294,20 @@ public class ClausalForm
 		StringBuffer temp = new StringBuffer(input);
 		StringBuffer leftOperand = new StringBuffer();
 		StringBuffer rightOperand = new StringBuffer();
+		ArrayList<StringBuffer> splitlist = new ArrayList<StringBuffer>();		
 		
 		/* program */
 		System.out.println("input : " + input);
-		iterator = 0;
-		while(iterator < temp.length())
+		iterator = input.length()-1;
+		
+		/* cari bagian yang bisa di distribution out */
+		while(iterator >= 0)
 		{
-			leftOperand = new StringBuffer();
-			rightOperand = new StringBuffer();
+			/* ketemu sebuah operator, periksa bisa di didstribution out atau tidak */
 			if(temp.charAt(iterator) == 'V' || temp.charAt(iterator) == '^')
-			{
+			{			
+				leftOperand = new StringBuffer();
+				rightOperand = new StringBuffer();
 				operator = temp.charAt(iterator);
 				
 				/* cari operand sebelah kirinya */
@@ -366,13 +375,21 @@ public class ClausalForm
 				if(valid(leftOperand) == false && valid(rightOperand))
 				{
 					System.out.println("Kasus aV(b^c^d)");
+					splitlist = split(rightOperand);
+					System.out.println("splitlist : " + splitlist);
 				}
+				/* Menangani yang bentuknya (b^c^d)Va */
 				else if(valid(leftOperand) && valid(rightOperand) == false)
 				{
-					System.out.println("Kasus (aVbVc)^d");
+					/* Kalo kebalik, tukar left operand sama right operandnya */
+					temp = new StringBuffer();
+					temp.append(rightOperand);
+					temp.append(operator);
+					temp.append(leftOperand);
+					iterator ++; /* biar iterator nya ga geser di ++ karena di akhir iteratornya -- */
 				}
 			}
-			iterator ++;
+			iterator --;
 		}
 	}
 	
@@ -401,10 +418,111 @@ public class ClausalForm
 		}
 		return valid;
 	}
+	private ArrayList<StringBuffer> split(StringBuffer input)
+	{
+		/* variable */
+		int iterator;
+		int counter;
+		int i;
+		int globalcounter;
+		StringBuffer leftOperand;
+		StringBuffer rightOperand;
+		ArrayList<StringBuffer> splitlist = new ArrayList<StringBuffer>();
+		
+		/* program */
+		iterator = 0;
+		globalcounter = 0;
+		counter = 0;
+		boolean valid = true;
+		while(iterator < input.length())
+		{
+			if(input.charAt(iterator) == '(')
+			{
+				globalcounter++;
+			}
+			else if(input.charAt(iterator) == ')')
+			{
+				globalcounter--;
+			}
+			else if((input.charAt(iterator) == 'V' || input.charAt(iterator) == '^') && globalcounter == 1)
+			{
+				leftOperand = new StringBuffer();
+				rightOperand = new StringBuffer();
+				
+				/* ambil left operand */
+				counter = 0;
+				i = iterator - 1;
+				if(input.charAt(i) == ')')
+				{
+					counter ++;
+					i--;
+					while(i >= 0 && counter > 0)
+					{
+						leftOperand.insert(0,input.charAt(i));
+						i--;
+						if(input.charAt(i) == '(')
+						{
+							counter --;
+						}
+						else if(input.charAt(i) == ')')
+						{
+							counter ++;
+						}
+					}
+				}
+				else
+				{
+					leftOperand.append(input.charAt(i));
+					if(input.charAt(i-1) == '~')
+					{
+						leftOperand.insert(0, '~');
+					}
+				}
+				
+				/* ambil right operand */
+				counter = 0;
+				i = iterator + 1;
+				if(input.charAt(i) == '(')
+				{
+					counter ++;
+					i++;
+					while(i < input.length() && counter > 0)
+					{
+						rightOperand.append(input.charAt(i));
+						i++;
+						if(input.charAt(i) == '(')
+						{
+							counter ++;
+						}
+						else if(input.charAt(i) == ')')
+						{
+							counter --;
+						}
+					}
+				}
+				else
+				{
+					rightOperand.append(input.charAt(i));
+					if(input.charAt(i) == '~')
+					{
+						rightOperand.insert(1, input.charAt(i));
+					}
+				}
+				splitlist.add(leftOperand);
+				splitlist.add(rightOperand);
+				if(splitlist.size() > 2)
+				{
+					splitlist.remove(splitlist.size()-2);
+				}
+			}
+			iterator++;
+		}
+		return splitlist;
+	}
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(b^c^d)");
+		ClausalForm CF = new ClausalForm("(aVb^(cV(d^e)))^c");
 		CF.D();
 	}
 
