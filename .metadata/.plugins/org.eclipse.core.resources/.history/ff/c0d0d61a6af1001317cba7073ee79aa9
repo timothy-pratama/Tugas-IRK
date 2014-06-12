@@ -262,7 +262,42 @@ public class ClausalForm
 	}
 	public void D()
 	{
-		System.out.println("Method D is under construction");
+		/* Variable */
+		StringBuffer temp = new StringBuffer(input);
+		int counter;
+		int iterator;
+		int index;
+		int i;
+		boolean found = false;
+		
+		/* Program */
+		/* Kasus aV(b^c) -> (aVb)^(aVc) */
+		iterator = 0;
+		while(iterator < temp.length())
+		{
+			if(temp.charAt(iterator)=='V' && temp.charAt(iterator - 1) != ')' && temp.charAt(iterator + 1) == '(')
+			{
+				i = iterator + 2;
+				counter = 1;
+				while(counter > 0 && !found)
+				{
+					if(temp.charAt(i) == '^')
+					{
+						found = true;
+					}
+					else
+					{
+						i ++;
+					}
+				}
+			}
+			else
+			{
+				iterator ++;
+			}
+		}
+		
+		System.out.println("temp = " + temp);
 	}
 	
 	private void O()

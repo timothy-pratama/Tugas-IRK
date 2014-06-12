@@ -262,9 +262,8 @@ public class ClausalForm
 	}
 	public void D()
 	{
-		System.out.println("Method D is under construction");
+		
 	}
-	
 	private void O()
 	{
 		System.out.println("Method O");
