@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import android.drm.DrmStore.RightsStatus;
+
 public class ClausalForm 
 {
 	/* Attribute */
@@ -291,14 +293,16 @@ public class ClausalForm
 		int index;
 		int counter;
 		char operator;
-		StringBuffer temp = new StringBuffer(input);
+		boolean sama;
+		StringBuffer temp = new StringBuffer(output);
+		StringBuffer temp1 = new StringBuffer();
 		StringBuffer leftOperand = new StringBuffer();
 		StringBuffer rightOperand = new StringBuffer();
+		StringBuffer result = new StringBuffer();
 		ArrayList<StringBuffer> splitlist = new ArrayList<StringBuffer>();		
 		ArrayList<Character> operators = new ArrayList<Character>();
 	
 		/* program */
-		System.out.println("input : " + input);
 		iterator = input.length()-1;
 		
 		/* cari bagian yang bisa di distribution out */
@@ -372,39 +376,191 @@ public class ClausalForm
 						i++;
 					}
 				}
+				
 				/* Menangani yang bentuknya aV(b^c^d) */
 				if(valid(leftOperand) == false && valid(rightOperand))
 				{
 					splitlist = split(rightOperand);
 					operators = getOperators(rightOperand);
-					System.out.println("splitlist : " + splitlist.toString());
-					System.out.println("operatos : " + operators.toString());
+					result = new StringBuffer();
+					sama = false;
 					
 					/* Proses Distribution out-nya */
-					
+					i = 0;
+					for(StringBuffer operand : splitlist)
+					{
+						if(i < operators.size())
+						{
+							if(operator != operators.get(i))
+							{
+								result.append('(');
+								sama = false;
+							}
+							else
+							{
+								sama = true;
+							}
+						}
+						else if(i == operators.size() && !sama)
+						{
+							result.append('(');
+						}
+						if(!sama || i == 0)
+						{
+							result.append(leftOperand);
+						}
+						result.append(operator);
+						result.append(operand);
+						if(i < operators.size())
+						{
+							if(!sama)
+							{
+								result.append(')');
+							}
+						}
+						else if (i == operators.size() && !sama)
+						{
+							result.append(')');
+						}
+						if(i < operators.size())
+						{
+							if(!sama)
+							{
+								result.append(operators.get(i));
+							}
+							i++;
+						}
+					}
+					index = temp.indexOf(leftOperand.toString() + operator + rightOperand.toString());
+					temp.replace(index, leftOperand.length() + rightOperand.length() + index + 1, result.toString());
 				}
 				/* Menangani yang bentuknya (b^c^d)Va */
 				else if(valid(leftOperand) && valid(rightOperand) == false)
 				{
 					/* Kalo kebalik, tukar left operand sama right operandnya */
-					temp = new StringBuffer();
-					temp.append(rightOperand);
-					temp.append(operator);
-					temp.append(leftOperand);
-					iterator ++; /* biar iterator nya ga geser di ++ karena di akhir iteratornya -- */
+					temp1 = new StringBuffer();
+					temp1.append(rightOperand);
+					temp1.append(operator);
+					temp1.append(leftOperand);
+					index = temp.indexOf(leftOperand.toString() + operator + rightOperand.toString());
+					temp.replace(index,leftOperand.length() + 1 + index + rightOperand.length(),temp1.toString());
+					iterator = temp.length(); 
 				}
 			}
 			iterator --;
 		}
+		output = temp.toString();
+		System.out.println("Output from D : " + output);
 	}
 	
 	private void O()
 	{
-		System.out.println("Method O");
+		/* variable */
+		int i;
+		int iterator;
+		int counter;
+		int globalcounter = 0;
+		StringBuffer temp = new StringBuffer(output);
+		StringBuffer leftOperand = new StringBuffer();
+		StringBuffer rightOperand = new StringBuffer();
+		ArrayList<StringBuffer> splitlist = new ArrayList<StringBuffer>();
+		
+		/* program */
+		System.out.println("input : " + temp);
+		iterator = 0;
+		while(iterator < temp.length())
+		{
+			if((temp.charAt(iterator) == 'V' || temp.charAt(iterator) == '^') && globalcounter <= 1)
+			{
+				//Ambil Operand bagian kirinya
+				leftOperand = new StringBuffer();
+				i = iterator - 1;
+				if(temp.charAt(i) != ')')
+				{
+					leftOperand.append(temp.charAt(i));
+					if(i > 0)
+					{
+						if(temp.charAt(i-1) == '~')
+						{
+							leftOperand.insert(0,'~');
+						}
+					}
+				}
+				else
+				{
+					leftOperand.append(')');
+					counter = 1;
+					i--;
+					while(counter > 0)
+					{
+						if(temp.charAt(i) == '(')
+						{
+							counter --;
+						}
+						if(temp.charAt(i) == ')')
+						{
+							counter ++;
+						}
+						leftOperand.insert(0,temp.charAt(i));
+						i--;
+					}
+				}
+				
+				// Ambil operand bagian kanannya
+				rightOperand = new StringBuffer();
+				i = iterator + 1;
+				if(temp.charAt(i) != '(')
+				{
+					rightOperand.append(temp.charAt(i));
+					if(temp.charAt(i) == '~')
+					{
+						rightOperand.insert(1,temp.charAt(i+1));
+					}
+				}
+				else
+				{
+					counter = 1;
+					i++;
+					rightOperand.append('(');
+					while(counter > 0)
+					{
+						if(temp.charAt(i) == '(')
+						{
+							counter ++;
+						}
+						else if(temp.charAt(i) == ')')
+						{
+							counter --;
+						}
+						rightOperand.insert(rightOperand.length(),temp.charAt(i));
+						i++;
+					}
+				}
+				System.out.println("left operand : " + leftOperand);
+				System.out.println("right operand : " + rightOperand);
+				splitlist.add(leftOperand);
+				splitlist.add(rightOperand);
+				if(splitlist.size()>2)
+				{
+					splitlist.remove(splitlist.size()-3);
+				}
+				System.out.println("splitlist : " +splitlist);
+			}
+			else if(temp.charAt(iterator) == '(')
+			{
+				globalcounter++;
+			}
+			else if(temp.charAt(iterator) == ')')
+			{
+				globalcounter--;
+			}
+			iterator++;
+		}
 	}
 	public void INDO()
 	{
 		input = input.replaceAll(" ", "");
+		System.out.println("Input : " + input);
 		I();
 		N();
 		D();
@@ -510,7 +666,7 @@ public class ClausalForm
 					rightOperand.append(input.charAt(i));
 					if(input.charAt(i) == '~')
 					{
-						rightOperand.insert(1, input.charAt(i));
+						rightOperand.insert(1, input.charAt(i+1));
 					}
 				}
 				splitlist.add(leftOperand);
@@ -556,8 +712,8 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(b^c)");
-		CF.D();
+		ClausalForm CF = new ClausalForm("~(g^(r=>f))");
+		CF.INDO();
 	}
 
 }
