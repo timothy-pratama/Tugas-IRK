@@ -465,9 +465,9 @@ public class ClausalForm
 		StringBuffer rightOperand = new StringBuffer();
 		ArrayList<StringBuffer> splitlist = new ArrayList<StringBuffer>();
 		ArrayList<Character> operators = new ArrayList<Character>();
-		ArrayList<StringBuffer> result = new ArrayList<StringBuffer>();
 		
 		/* program */
+		System.out.println("input : " + temp);
 		iterator = 0;
 		/* Ambil Operand dan Operator nya */
 		while(iterator < temp.length())
@@ -565,31 +565,9 @@ public class ClausalForm
 				s.deleteCharAt(0);
 				s.deleteCharAt(s.length()-1);
 			}
-			if(s.indexOf("V") >= 0)
-			{
-				s.replace(s.indexOf("V"), s.indexOf("V")+1, ",");
-			}
 		}
-		result.add(splitlist.get(0));
-		for(iterator=0;iterator<operators.size();iterator++)
-		{
-			if(operators.get(iterator)=='^')
-			{
-				result.add(splitlist.get(iterator+1));
-			}
-			else
-			{
-				result.get(result.size()-1).append("," + splitlist.get(iterator+1));
-			}
-		}
-		output = "";
-		for(StringBuffer s : result)
-		{
-			s.insert(0, '{');
-			s.append('}');
-			output += s.toString();
-		}
-		System.out.println("Output from O : " + output);
+		System.out.println("splitlist : " + splitlist.toString());
+		System.out.println("operators : " +operators.toString());
 	}
 	public void INDO()
 	{
@@ -746,7 +724,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("~(g ^(r=> f ))");
+		ClausalForm CF = new ClausalForm("~(g^(r=>f))");
 		CF.INDO();
 	}
 
