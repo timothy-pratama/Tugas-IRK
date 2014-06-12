@@ -363,11 +363,11 @@ public class ClausalForm
 					}
 				}
 				/* Menangani yang bentuknya aV(b^c^d) */
-				if(valid(leftOperand) == false && valid(rightOperand))
+				if(contains(leftOperand, "(") == false && contains(rightOperand, "("))
 				{
 					System.out.println("Kasus aV(b^c^d)");
 				}
-				else if(valid(leftOperand) && valid(rightOperand) == false)
+				else if(contains(leftOperand,"(") && contains(rightOperand, "(") == false)
 				{
 					System.out.println("Kasus (aVbVc)^d");
 				}
@@ -388,18 +388,16 @@ public class ClausalForm
 		D();
 		O();
 	}
-	private boolean valid(StringBuffer input)
+	private boolean contains(StringBuffer input, String c)
 	{
-		boolean valid;
-		if(input.indexOf("V") >= 0 || input.indexOf("^") >= 0)
+		if(input.indexOf(c) >= 0)
 		{
-			valid = true;
+			return true;
 		}
 		else
 		{
-			valid = false;
+			return false;
 		}
-		return valid;
 	}
 	
 	public static void main(String[] args) 

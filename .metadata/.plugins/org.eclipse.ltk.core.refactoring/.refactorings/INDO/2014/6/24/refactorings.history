@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;com.example.indo.ClausalForm.contains(...)&apos; to &apos;valid&apos;&#x0D;&#x0A;- Original project: &apos;INDO&apos;&#x0D;&#x0A;- Original element: &apos;com.example.indo.ClausalForm.contains(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;com.example.indo.ClausalForm.valid(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;contains&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;com.example.indo{ClausalForm.java[ClausalForm~contains~QStringBuffer;~QString;" name="valid" references="true" stamp="1402565619651" version="1.0"/>
+</session>

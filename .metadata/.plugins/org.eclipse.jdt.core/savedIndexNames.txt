@@ -1,4 +1,3 @@
 INDEX VERSION 1.126+C:\Users\timothy.pratama\Desktop\Tugas IRK\.metadata\.plugins\org.eclipse.jdt.core
 3585062058.index
-3306976234.index
 2285770669.index

@@ -404,7 +404,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(b^c^d)");
+		ClausalForm CF = new ClausalForm("(b^a)V(b^c^d)");
 		CF.D();
 	}
 
