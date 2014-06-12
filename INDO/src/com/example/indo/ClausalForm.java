@@ -63,6 +63,7 @@ public class ClausalForm
 		int index;
 		int location;
 		int counter;
+		int iterator;
 		StringBuffer left;
 		StringBuffer right;
 		StringBuffer finalleft;
@@ -85,6 +86,12 @@ public class ClausalForm
 			if(temp.charAt(index - 1) != ')')
 			{
 				left = left.insert(0, temp.charAt(index-1));
+				iterator = index-2;
+				while(temp.charAt(iterator) == '~' && iterator >= 0)
+				{
+					left = left.insert(0,'~');
+					iterator--;
+				}
 			}
 			else
 			{
@@ -113,6 +120,12 @@ public class ClausalForm
 			if(temp.charAt(index + 3) != '(')
 			{
 				right = right.insert(0, temp.charAt(index+3));
+				iterator = index + 4;
+				while(temp.charAt(iterator) == '~')
+				{
+					right = right.insert(0,'~');
+					iterator++;
+				}
 			}
 			else
 			{
@@ -262,7 +275,103 @@ public class ClausalForm
 	}
 	public void D()
 	{
-		System.out.println("Method D is under construction");
+		/* Bentuk : 
+		 * aV(b^c)
+		 * (aVb)^c
+		 */
+		
+		/* variable */
+		int iterator;
+		int i;
+		int index;
+		int counter;
+		char operator;
+		StringBuffer temp = new StringBuffer(input);
+		StringBuffer leftOperand = new StringBuffer();
+		StringBuffer rightOperand = new StringBuffer();
+		
+		/* program */
+		System.out.println("input : " + input);
+		iterator = 0;
+		while(iterator < temp.length())
+		{
+			leftOperand = new StringBuffer();
+			rightOperand = new StringBuffer();
+			if(temp.charAt(iterator) == 'V' || temp.charAt(iterator) == '^')
+			{
+				operator = temp.charAt(iterator);
+				
+				/* cari operand sebelah kirinya */
+				i = iterator - 1;
+				if(temp.charAt(i) != ')')
+				{
+					leftOperand.insert(0, temp.charAt(i));
+					i--;
+					if(i >= 0 && temp.charAt(i) == '~')
+					{
+						leftOperand.insert(0,'~');
+					}
+				}
+				else
+				{
+					leftOperand.insert(0,')');
+					counter = 1;
+					i--;
+					while(i >= 0 && counter > 0)
+					{
+						if(temp.charAt(i) == '(')
+						{
+							counter --;
+						}
+						else if(temp.charAt(i) == ')')
+						{
+							counter ++;
+						}
+						leftOperand.insert(0,temp.charAt(i));
+						i--;
+					}
+				}
+				
+				/* cari operand sebelah kanan */
+				i = iterator + 1;
+				if(temp.charAt(i) != '(')
+				{
+					if(temp.charAt(i) == '~')
+					{
+						rightOperand.insert(0,'~');
+						i++;
+					}
+					rightOperand.insert(rightOperand.length(),temp.charAt(i));
+				}
+				else
+				{
+					rightOperand.insert(0,'(');
+					counter = 1;
+					i++;
+					while(i >= 0 && counter > 0)
+					{
+						if(temp.charAt(i) == '(')
+						{
+							counter ++;
+						}
+						else if(temp.charAt(i) == ')')
+						{
+							counter --;
+						}
+						rightOperand.insert(rightOperand.length(),temp.charAt(i));
+						i++;
+					}
+				}
+				if((contains(leftOperand, "(") && !contains(rightOperand,"(")) || 
+						(contains(rightOperand, "(") && !contains(leftOperand,"(")))
+				{
+					System.out.println("Operator : " + operator);
+					System.out.println("LeftOperand = " + leftOperand.toString());
+					System.out.println("RightOperand = " + rightOperand.toString());
+				}
+			}
+			iterator ++;
+		}
 	}
 	
 	private void O()
@@ -277,10 +386,21 @@ public class ClausalForm
 		D();
 		O();
 	}
+	private boolean contains(StringBuffer input, String c)
+	{
+		if(input.indexOf(c) >= 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(bVc)");
+		ClausalForm CF = new ClausalForm("aV(b^c^d)");
 		CF.D();
 	}
 
