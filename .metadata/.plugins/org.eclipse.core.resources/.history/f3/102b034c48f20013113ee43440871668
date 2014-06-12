@@ -375,13 +375,9 @@ public class ClausalForm
 				/* Menangani yang bentuknya aV(b^c^d) */
 				if(valid(leftOperand) == false && valid(rightOperand))
 				{
+					System.out.println("Kasus aV(b^c^d)");
 					splitlist = split(rightOperand);
-					operators = getOperators(rightOperand);
-					System.out.println("splitlist : " + splitlist.toString());
-					System.out.println("operatos : " + operators.toString());
-					
-					/* Proses Distribution out-nya */
-					
+					System.out.println("splitlist : " + splitlist);
 				}
 				/* Menangani yang bentuknya (b^c^d)Va */
 				else if(valid(leftOperand) && valid(rightOperand) == false)
@@ -393,6 +389,7 @@ public class ClausalForm
 					temp.append(leftOperand);
 					iterator ++; /* biar iterator nya ga geser di ++ karena di akhir iteratornya -- */
 				}
+				System.out.println("operator == " + operator);
 			}
 			iterator --;
 		}
@@ -526,37 +523,13 @@ public class ClausalForm
 	}
 	private ArrayList<Character> getOperators(StringBuffer input)
 	{
-		/* variable */
 		ArrayList<Character> operators = new ArrayList<Character>();
-		int counter;
-		int iterator;
-		int i;
-		
-		/* program */
-		iterator = 0;
-		counter = 0;
-		while(iterator < input.length())
-		{
-			if(input.charAt(iterator) == '(')
-			{
-				counter ++;
-			}
-			else if(input.charAt(iterator) == ')')
-			{
-				counter --;
-			}
-			else if((input.charAt(iterator) == 'V' || input.charAt(iterator) == '^') && counter == 1)
-			{
-				operators.add(input.charAt(iterator));
-			}
-			iterator ++;
-		}
 		return operators;
 	}
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(b^c)");
+		ClausalForm CF = new ClausalForm("(aVb^(cV(d^e)))^c");
 		CF.D();
 	}
 

@@ -375,13 +375,13 @@ public class ClausalForm
 				/* Menangani yang bentuknya aV(b^c^d) */
 				if(valid(leftOperand) == false && valid(rightOperand))
 				{
+					System.out.println("Kasus aV(b^c^d)");
 					splitlist = split(rightOperand);
 					operators = getOperators(rightOperand);
 					System.out.println("splitlist : " + splitlist.toString());
 					System.out.println("operatos : " + operators.toString());
 					
 					/* Proses Distribution out-nya */
-					
 				}
 				/* Menangani yang bentuknya (b^c^d)Va */
 				else if(valid(leftOperand) && valid(rightOperand) == false)
@@ -556,7 +556,7 @@ public class ClausalForm
 	
 	public static void main(String[] args) 
 	{
-		ClausalForm CF = new ClausalForm("aV(b^c)");
+		ClausalForm CF = new ClausalForm("(aVb^(cV(d^e)))^c");
 		CF.D();
 	}
 

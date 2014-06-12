@@ -375,6 +375,7 @@ public class ClausalForm
 				/* Menangani yang bentuknya aV(b^c^d) */
 				if(valid(leftOperand) == false && valid(rightOperand))
 				{
+					System.out.println("Kasus aV(b^c^d)");
 					splitlist = split(rightOperand);
 					operators = getOperators(rightOperand);
 					System.out.println("splitlist : " + splitlist.toString());
